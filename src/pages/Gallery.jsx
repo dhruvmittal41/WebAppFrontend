@@ -5,6 +5,7 @@ import {
 import { useEffect, useState } from "react";
 
 const EVENTS = ["Haldi", "Mehendi", "Sangeet", "Wedding", "Reception"];
+const API = import.meta.env.VITE_API_BASE;
 
 export default function Gallery() {
   const [imagesByEvent, setImagesByEvent] = useState({});
@@ -15,7 +16,7 @@ export default function Gallery() {
       const data = {};
       for (let event of EVENTS) {
         try {
-          const res = await fetch(`http://localhost:5055/images/${event}`);
+          const res = await fetch(`${API}/images/${event}`);
           const json = await res.json();
           data[event] = json.images || [];
         } catch (err) {
