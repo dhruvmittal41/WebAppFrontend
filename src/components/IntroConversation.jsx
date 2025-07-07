@@ -5,7 +5,7 @@ import bride1 from '../assets/chibi-bride1.png';
 import groom1 from '../assets/chibi-groom1.png';
 import together from '../assets/chibi-bride-groom.png';
 import confetti from 'canvas-confetti';
-import './introConversation.css';
+import './IntroConversation.css';
 
 const dialogues = [
   { char: 'bride', text: "Hey! You there!" },
