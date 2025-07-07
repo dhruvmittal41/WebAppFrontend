@@ -19,13 +19,14 @@ export default function AdminPanel() {
   const [file, setFile] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
+  const API = import.meta.env.VITE_API_BASE;
 
   async function uploadToCloudinary(file, event) {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("event", event);
 
- const res = await fetch(`http://localhost:5055/upload?event=${encodeURIComponent(event)}`, {
+ const res = await fetch(`${API}/upload?event=${encodeURIComponent(event)}`, {
   method: "POST",
   body: formData,
 });
