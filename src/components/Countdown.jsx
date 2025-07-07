@@ -22,11 +22,15 @@ export default function Countdown({ targetDate }) {
   }, []);
 
   return (
-    <VStack spacing={1}>
-      <Text fontSize="2xl" color="pink.600" fontWeight="bold">
+    <VStack spacing={{ base: 2, md: 3 }}>
+      <Text
+        fontSize={{ base: 'lg', sm: 'xl', md: '2xl' }}
+        color="pink.600"
+        fontWeight="bold"
+      >
         Countdown to Our Big Day 💖
       </Text>
-      <HStack spacing={4}>
+      <HStack spacing={{ base: 3, md: 6 }}>
         <TimeBox label="Days" value={timeLeft.days} />
         <TimeBox label="Hours" value={timeLeft.hours} />
         <TimeBox label="Minutes" value={timeLeft.minutes} />
@@ -39,10 +43,16 @@ export default function Countdown({ targetDate }) {
 function TimeBox({ label, value }) {
   return (
     <VStack spacing={0}>
-      <Text fontSize="3xl" fontWeight="bold" color="pink.800">
+      <Text
+        fontSize={{ base: '2xl', sm: '3xl', md: '4xl' }}
+        fontWeight="bold"
+        color="pink.800"
+      >
         {value < 10 ? `0${value}` : value}
       </Text>
-      <Text fontSize="sm" color="gray.600">{label}</Text>
+      <Text fontSize={{ base: 'xs', sm: 'sm', md: 'md' }} color="gray.600">
+        {label}
+      </Text>
     </VStack>
   );
 }
