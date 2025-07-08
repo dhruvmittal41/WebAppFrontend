@@ -1,4 +1,4 @@
-import { Box, Heading, Text, VStack } from '@chakra-ui/react';
+import { Box, Heading, Text, VStack,Image } from '@chakra-ui/react';
 import Countdown from '../components/Countdown';
 
 export default function Home() {
@@ -36,7 +36,7 @@ export default function Home() {
   return (
     <Box
       minH="100vh"
-      bgGradient="linear(to-r, pink.100, white)"
+      bgGradient="linear(to-r, pink.50, yellow.50)"
       py={{ base: 10, md: 16 }}
       px={{ base: 4, md: 8 }}
       position="relative"
@@ -66,11 +66,46 @@ export default function Home() {
         maxW="800px"
         px={{ base: 2, md: 4 }}
       >
+        {/* Ganesha symbol with Sanskrit subtitle */}
+<Box textAlign="center" mb={4}>
+  <Image
+    src="/ganesha.png"
+    alt="Lord Ganesha"
+    boxSize={{ base: '60px', md: '80px' }}
+    mx="auto"
+    mb={2}
+  />
+  <Text
+    fontSize={{ base: 'md', md: 'lg' }}
+    color="gray.600"
+    fontWeight="medium"
+    fontFamily="'Noto Sans Devanagari', serif"
+  >
+    ॐ गणेशाय नमः
+  </Text>
+</Box>
+
         <Heading fontSize={{ base: '2xl', sm: '3xl', md: '4xl', lg: '5xl' }} color="pink.600">
           Welcome to the Wedding Celebration of
         </Heading>
 
-        <Heading fontSize={{ base: '3xl', sm: '4xl', md: '5xl', lg: '6xl' }} color="pink.700">
+        <Heading  
+        fontFamily="'Great Vibes', cursive"
+        fontSize={{ base: '3xl', md: '5xl', lg: '6xl' }}
+        color="pink.700"
+        sx={{
+          animation: 'shimmer 3s ease-in-out infinite',
+          '@keyframes shimmer': {
+          '0%': { opacity: 0.9 },
+          '50%': {
+                  opacity: 1,
+                  textShadow: '0 0 12px rgba(255, 190, 200, 0.6)',
+                  },
+          '100%': { opacity: 0.9 },
+    },
+  }}
+
+  >
           Shivam ❤️ Simran
         </Heading>
 

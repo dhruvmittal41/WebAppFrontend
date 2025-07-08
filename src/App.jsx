@@ -10,6 +10,8 @@ import Navbar from './components/Navbar';
 import AdminPanel from './pages/AdminPanel';
 import IntroConversation from './components/IntroConversation';
 import MusicPlayer from './components/MusicPlayer';
+import Footer from './components/Footer';
+import { Box } from '@chakra-ui/react';
 
 
 function App() {
@@ -22,12 +24,19 @@ function App() {
 
   return (
     <>
+      <Box
+      minH="100vh"
+      display="flex"
+      flexDirection="column"
+      justifyContent="space-between"
+    >
       {showIntro ? (
         <IntroConversation onFinish={handleFinishIntro} />
       ) : (
         <>
           <Navbar />
           <MusicPlayer />
+          <Box as="main" flex="1">
 
           <Routes>
             <Route path="/" element={<Home />} />
@@ -38,8 +47,11 @@ function App() {
             <Route path="/map" element={<Map />} />
             <Route path="/admin" element={<AdminPanel />} />
           </Routes>
+          </Box>
+          <Footer/>
         </>
       )}
+      </Box>
     </>
   );
 }
