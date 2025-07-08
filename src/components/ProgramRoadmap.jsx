@@ -36,32 +36,32 @@ const getEmoji = (title) => {
 
 const programs = [
   {
-    title: 'Engagement',
-    date: '2025-10-15',
+    title: 'Roka',
+    date: '2025-07-04',
     status: 'completed',
-    description: 'A lovely evening where families met and rings were exchanged.',
+    description: '#Rokafied',
   },
   {
     title: 'Haldi Ceremony',
-    date: '2025-12-10',
-    status: 'completed',
+    date: 'Not announced yet',
+    status: 'upcoming',
     description: 'A vibrant ceremony full of color and blessings.',
   },
   {
     title: 'Mehndi Night',
-    date: '2025-12-12',
-    status: 'ongoing',
+    date: 'Not announced yet',
+    status: 'upcoming',
     description: 'Celebrating with music, dance, and intricate mehndi art.',
   },
   {
     title: 'Sangeet',
-    date: '2025-12-13',
+    date: 'Not announced yet',
     status: 'upcoming',
     description: 'Dance and fun with family performances.',
   },
   {
     title: 'Wedding Day',
-    date: '2025-12-15',
+    date: '2025-11-23',
     status: 'upcoming',
     description: 'The big day of union and celebration.',
   },

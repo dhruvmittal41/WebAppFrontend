@@ -9,7 +9,8 @@ import Map from './pages/Map';
 import Navbar from './components/Navbar';
 import AdminPanel from './pages/AdminPanel';
 import IntroConversation from './components/IntroConversation';
-import './index.css';
+import MusicPlayer from './components/MusicPlayer';
+
 
 function App() {
   const [showIntro, setShowIntro] = useState(() => !localStorage.getItem('seenIntro'));
@@ -26,6 +27,8 @@ function App() {
       ) : (
         <>
           <Navbar />
+          <MusicPlayer />
+
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/programs" element={<Programs />} />

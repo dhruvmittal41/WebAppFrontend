@@ -29,7 +29,7 @@ export default function IntroConversation({ onFinish }) {
 
   const playMusic = async () => {
     try {
-      bgMusic.current.volume = 0.8;
+      bgMusic.current.volume = 1.0;
       bgMusic.current.loop = true;
       await bgMusic.current.play();
     } catch (err) {
@@ -99,7 +99,7 @@ export default function IntroConversation({ onFinish }) {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 1.0 }}
+          transition={{ duration: 1.9 }}
           className={`speech-bubble ${
             isLast ? 'center-bubble' : dialogues[current].char === 'bride' ? 'left-bubble' : 'right-bubble'
           }`}
