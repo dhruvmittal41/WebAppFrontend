@@ -42,7 +42,7 @@ export default function IntroConversation({ onFinish }) {
   // Advance dialogue timer
   useEffect(() => {
     if (!isLast) {
-      const timer = setTimeout(() => setCurrent((prev) => prev + 1), 2000);
+      const timer = setTimeout(() => setCurrent((prev) => prev + 1), 3000);
       return () => clearTimeout(timer);
     }
   }, [current]);

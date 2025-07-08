@@ -17,10 +17,7 @@ import { Box } from '@chakra-ui/react';
 function App() {
   const [showIntro, setShowIntro] = useState(() => !localStorage.getItem('seenIntro'));
 
-  const handleFinishIntro = () => {
-    localStorage.setItem('seenIntro', 'true');
-    setShowIntro(false);
-  };
+
 
   return (
     <>
@@ -31,7 +28,7 @@ function App() {
       justifyContent="space-between"
     >
       {showIntro ? (
-        <IntroConversation onFinish={handleFinishIntro} />
+        <IntroConversation onFinish={() => setShowIntro(false)} />
       ) : (
         <>
           <Navbar />
@@ -45,7 +42,7 @@ function App() {
             <Route path="/story" element={<Story />} />
             <Route path="/blessings" element={<Blessings />} />
             <Route path="/map" element={<Map />} />
-            <Route path="/admin" element={<AdminPanel />} />
+            <Route path="/AdminHmraBhaiya" element={<AdminPanel />} />
           </Routes>
           </Box>
           <Footer/>
