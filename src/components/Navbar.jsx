@@ -4,9 +4,9 @@ import {
   HStack,
   Link,
   IconButton,
-  useDisclosure,
   VStack,
   Collapse,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { NavLink as RouterLink } from "react-router-dom";
@@ -24,35 +24,70 @@ export default function Navbar() {
   const { isOpen, onToggle } = useDisclosure();
 
   return (
-    <Box bg="pink.100" px={{ base: 4, md: 6 }} py={4} shadow="md">
-      <Flex h={16} alignItems="center" justifyContent="space-between">
-        {/* Logo or Title (Optional) */}
-        <Box fontWeight="bold" color="pink.700" fontSize="lg">
+    <Box
+      as="nav"
+      sx={{
+        position: "sticky",
+        top: 0,
+        zIndex: 100,
+        bg: "pink.100",
+        px: { base: 4, md: 8 },
+        py: 3,
+        boxShadow: "md",
+        transition: "all 0.3s ease-in-out",
+      }}
+    >
+      <Flex
+        align="center"
+        justify="space-between"
+        sx={{
+          h: 16,
+        }}
+      >
+        {/* Logo / Title */}
+        <Box
+          sx={{
+            fontWeight: "bold",
+            fontSize: "xl",
+            color: "pink.700",
+            letterSpacing: "wide",
+          }}
+        >
           Wedding
         </Box>
 
-        {/* Hamburger Menu (Mobile) */}
+        {/* Mobile Menu Icon */}
         <IconButton
-          display={{ base: "flex", md: "none" }}
           onClick={onToggle}
           icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
           variant="ghost"
           aria-label="Toggle Navigation"
+          sx={{
+            display: { base: "flex", md: "none" },
+            color: "pink.700",
+            fontSize: "xl",
+          }}
         />
 
-        {/* Desktop Nav Links */}
+        {/* Desktop Links */}
         <HStack
+          as="ul"
           spacing={6}
-          display={{ base: "none", md: "flex" }}
+          sx={{
+            display: { base: "none", md: "flex" },
+          }}
         >
           {navItems.map((item) => (
             <Link
               as={RouterLink}
               key={item.name}
               to={item.path}
-              fontWeight="bold"
-              color="pink.700"
-              _hover={{ textDecoration: "underline" }}
+              sx={{
+                fontWeight: "semibold",
+                color: "pink.700",
+                fontSize: "md",
+                _hover: { textDecoration: "underline", color: "pink.600" },
+              }}
             >
               {item.name}
             </Link>
@@ -60,25 +95,37 @@ export default function Navbar() {
         </HStack>
       </Flex>
 
-      {/* Mobile Nav Menu */}
+      {/* Mobile Collapse Menu */}
       <Collapse in={isOpen} animateOpacity>
         <VStack
-          align="start"
           spacing={4}
-          mt={4}
-          px={2}
-          display={{ md: "none" }}
+          align="start"
+          sx={{
+            mt: 4,
+            display: { md: "none" },
+            px: 2,
+          }}
         >
           {navItems.map((item) => (
             <Link
               as={RouterLink}
               key={item.name}
               to={item.path}
-              fontWeight="bold"
-              color="pink.700"
-              _hover={{ textDecoration: "underline" }}
-              w="full"
               onClick={onToggle}
+              sx={{
+                w: "full",
+                fontWeight: "semibold",
+                color: "pink.700",
+                py: 2,
+                px: 3,
+                borderRadius: "md",
+                transition: "all 0.2s ease",
+                _hover: {
+                  bg: "pink.200",
+                  color: "pink.800",
+                  textDecoration: "none",
+                },
+              }}
             >
               {item.name}
             </Link>
