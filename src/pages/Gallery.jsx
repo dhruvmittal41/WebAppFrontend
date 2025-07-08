@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
-const EVENTS = ["Haldi", "Mehendi", "Sangeet", "Wedding", "Reception"];
+const EVENTS = ["Roka","Haldi", "Mehendi", "Sangeet", "Wedding", "Reception"];
 const API = import.meta.env.VITE_API_BASE;
 
 export default function Gallery() {

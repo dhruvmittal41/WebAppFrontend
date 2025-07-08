@@ -95,6 +95,7 @@ try {
           value={event}
           onChange={(e) => setEvent(e.target.value)}
         >
+          <option value="Roka">Roka</option>
           <option value="Haldi">Haldi</option>
           <option value="Mehendi">Mehendi</option>
           <option value="Sangeet">Sangeet</option>
