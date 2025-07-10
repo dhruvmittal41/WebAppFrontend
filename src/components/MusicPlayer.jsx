@@ -16,16 +16,18 @@ export default function MusicPlayer() {
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [trackIndex, setTrackIndex] = useState(0);
+  // eslint-disable-next-line no-unused-vars
   const [shuffledPlaylist, setShuffledPlaylist] = useState(shuffle([...playlist]));
 
+  
   useEffect(() => {
-    // Pause if on intro route
     if (location.pathname === '/intro') {
       audioRef.current?.pause();
       setIsPlaying(false);
     }
   }, [location]);
 
+  // Autoplay on first interaction
   useEffect(() => {
     const handleFirstClick = () => {
       if (!isPlaying && audioRef.current) {
@@ -37,14 +39,22 @@ export default function MusicPlayer() {
     return () => window.removeEventListener('click', handleFirstClick);
   }, [isPlaying]);
 
+  // When track index changes, load and play next track
+  useEffect(() => {
+    if (audioRef.current && isPlaying) {
+      audioRef.current.load(); // ensures new source is loaded
+      audioRef.current.play().catch(() => {});
+    }
+  }, [isPlaying, trackIndex]);
+
   const toggleMusic = () => {
     if (!audioRef.current) return;
     if (isPlaying) {
       audioRef.current.pause();
+      setIsPlaying(false);
     } else {
-      audioRef.current.play().catch(() => {});
+      audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
     }
-    setIsPlaying(!isPlaying);
   };
 
   const handleEnded = () => {
@@ -59,6 +69,7 @@ export default function MusicPlayer() {
         src={shuffledPlaylist[trackIndex]}
         onEnded={handleEnded}
         loop={false}
+        preload="auto"
       />
       {location.pathname !== '/intro' && (
         <IconButton

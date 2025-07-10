@@ -18,12 +18,14 @@ const dialogues = [
 
 export default function IntroConversation({ onFinish }) {
   const bgMusic = useRef(null);
+
   const [hasStarted, setHasStarted] = useState(false);
   const [current, setCurrent] = useState(0);
   const isLast = current === dialogues.length - 1;
 
   useEffect(() => {
     if (!hasStarted) return;
+
     const playMusic = async () => {
       try {
         bgMusic.current.volume = 1.0;
@@ -41,10 +43,20 @@ export default function IntroConversation({ onFinish }) {
       const timer = setTimeout(() => setCurrent((prev) => prev + 1), 3000);
       return () => clearTimeout(timer);
     }
-  }, [current]);
+  }, [current, isLast]);
+
+  const handleStart = async () => {
+    try {
+      setHasStarted(true);
+    } catch (err) {
+      console.warn('Bell chime error:', err);
+    }
+  };
 
   const triggerConfettiAndFinish = () => {
     confetti({ particleCount: 150, spread: 90, origin: { y: 0.6 } });
+
+
     setTimeout(() => {
       bgMusic.current.pause();
       onFinish();
@@ -55,7 +67,7 @@ export default function IntroConversation({ onFinish }) {
     <>
       {!hasStarted ? (
         <div className="start-experience">
-          <button className="continue-btn" onClick={() => setHasStarted(true)}>
+          <button className="continue-btn" onClick={() => setHasStarted(true)&& handleStart}>
             Start Experience 🎶
           </button>
         </div>
@@ -103,7 +115,7 @@ export default function IntroConversation({ onFinish }) {
           {/* Final CTA */}
           {isLast && (
             <button onClick={triggerConfettiAndFinish} className="continue-btn">
-              Let’s Go 💕
+              Lets Go 💕
             </button>
           )}
         </div>
