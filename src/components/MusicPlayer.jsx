@@ -47,16 +47,6 @@ export default function MusicPlayer() {
     }
   }, [isPlaying, trackIndex]);
 
-  const toggleMusic = () => {
-    if (!audioRef.current) return;
-    if (isPlaying) {
-      audioRef.current.pause();
-      setIsPlaying(false);
-    } else {
-      audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
-    }
-  };
-
   const handleEnded = () => {
     const next = (trackIndex + 1) % shuffledPlaylist.length;
     setTrackIndex(next);
@@ -71,20 +61,6 @@ export default function MusicPlayer() {
         loop={false}
         preload="auto"
       />
-      {location.pathname !== '/intro' && (
-        <IconButton
-          icon={isPlaying ? <FaPause /> : <FaPlay />}
-          position="fixed"
-          top="4"
-          right="4"
-          zIndex="999"
-          aria-label="Toggle music"
-          onClick={toggleMusic}
-          size="sm"
-          colorScheme="pink"
-          variant="ghost"
-        />
-      )}
     </>
   );
 }

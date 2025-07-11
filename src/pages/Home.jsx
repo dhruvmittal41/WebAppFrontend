@@ -1,4 +1,4 @@
-import { Box, Heading, Text, VStack, Image } from '@chakra-ui/react';
+import { Box, Heading, Text, VStack, Image, Stack, Flex, Center } from '@chakra-ui/react';
 import Countdown from '../components/Countdown';
 
 export default function Home() {
@@ -20,7 +20,7 @@ export default function Home() {
           bg="yellow.300"
           borderRadius="full"
           filter="blur(1px)"
-          zIndex="1"
+          zIndex={1}
           sx={{
             animation: `twinkle ${duration}s ease-in-out ${delay}s infinite alternate`,
             '@keyframes twinkle': {
@@ -51,6 +51,7 @@ export default function Home() {
         boxShadow: '0 0 30px rgba(212, 175, 55, 0.5)',
       }}
     >
+
       {/* Background golden mandala */}
       <Box
         position="absolute"
@@ -58,13 +59,25 @@ export default function Home() {
         left={0}
         right={0}
         bottom={0}
-        bgImage="url('/mandala-bg.png')" // 🔁 Ensure this file exists in public folder
+        bgImage="url('/mandala-bg.png')"
         bgRepeat="no-repeat"
         bgPosition="center"
         bgSize="contain"
         opacity={0.09}
         zIndex={0}
       />
+      <Box
+  position="absolute"
+  inset="0"
+  bgImage="url('/Bg-img.jpg')"
+  bgSize="contain"
+  bgRepeat="no-repeat"
+  bgPosition="center"
+  opacity={1.0}
+  transform="scale(1.18)"
+  zIndex={0}
+/>
+
 
       {/* Radial pastel overlay */}
       <Box
@@ -78,24 +91,7 @@ export default function Home() {
       {generateFireflies(30)}
 
       {/* Kalash icons */}
-      <Image
-        src="/kalash-left.png"
-        alt="Kalash Left"
-        position="absolute"
-        bottom="16px"
-        left="16px"
-        boxSize="50px"
-        zIndex={2}
-      />
-      <Image
-        src="/kalash-right.png"
-        alt="Kalash Right"
-        position="absolute"
-        bottom="16px"
-        right="16px"
-        boxSize="50px"
-        zIndex={2}
-      />
+     
 
       {/* Main Content */}
       <VStack
@@ -103,11 +99,21 @@ export default function Home() {
         align="center"
         zIndex={3}
         width="100%"
-        maxW="800px"
+        maxW="900px"
         px={{ base: 2, md: 4 }}
       >
-        {/* Ganesha symbol */}
-        <Box textAlign="center" mb={4}>
+
+        {/* Invitation Box */}
+        <Box
+          bg="whiteAlpha.800"
+          px={{ base: 4, md: 8 }}
+          py={6}
+          border="3px solid #E0B973"
+          borderRadius="2xl"
+          boxShadow="lg"
+          maxW="700px"
+          textAlign="center"
+        >
           <Image
             src="/ganesha.png"
             alt="Lord Ganesha"
@@ -115,31 +121,38 @@ export default function Home() {
             mx="auto"
             mb={2}
           />
+                  <Box textAlign="center">
+          
           <Text
             fontSize={{ base: 'md', md: 'lg' }}
             color="gray.600"
             fontWeight="medium"
             fontFamily="'Noto Sans Devanagari', serif"
           >
-            ॐ गणेशाय नमः
+            श्रीगणेशाय नमः
           </Text>
         </Box>
+           <Image
+        src="/kalash-left.png"
+        alt="Kalash Left"
+        position="relative"
+        float="left"
+        boxSize="50px"
+        zIndex={2}
+      />
+      <Image
+        src="/kalash-right.png"
+        alt="Kalash Right"
+        position="relative"
+        float="right"
+        boxSize="50px"
+        zIndex={2}
+      />
+         
 
-        {/* 🪔 Scroll-style Invitation */}
-        <Box
-          bg="whiteAlpha.800"
-          px={6}
-          py={4}
-          border="3px solid #E0B973"
-          borderRadius="2xl"
-          boxShadow="lg"
-          maxW="600px"
-          position="relative"
-        >
-
-          <Heading fontSize={{ base: '2xl', sm: '3xl', md: '4xl' }} color="pink.600">
+          {/* <Heading fontSize={{ base: '2xl', sm: '3xl', md: '4xl' }} color="pink.600">
             Welcome to the Wedding Celebration of
-          </Heading>
+          </Heading> */}
 
           <Heading
             fontFamily="'Great Vibes', cursive"
@@ -161,7 +174,38 @@ export default function Home() {
             Shivam ❤️ Simran
           </Heading>
 
-          <Text fontSize={{ base: 'md', sm: 'lg', md: 'xl' }} color="gray.600" mt={2}>
+       <Flex
+  direction={{ base: 'column', md: 'row' }}
+  justify="center"
+  align="flex-start"
+  gap={{ base: 6, md: 12 }}
+  mt={6}
+  textAlign={{ base: 'center', md: 'left' }}
+>
+  {/* Groom Section */}
+  <Box>
+    <Stack spacing={1} textAlign="center" fontFamily="'Great Vibes', cursive">
+      <Text fontSize={{ base: 'sm', md: 'md', lg: 'lg' }} color="gray.600">Son of</Text>
+      <Text fontSize={{ base: 'sm', md: 'md', lg: 'lg' }} color="gray.700">Sh. Ajeet Bansal</Text>
+      <Text fontSize={{ base: 'sm', md: 'md', lg: 'lg' }} color="gray.700">Smt. Neha Bansal</Text>
+      <Text fontSize={{ base: 'sm', md: 'md', lg: 'lg' }} color="gray.600" mt={2}>Grandson of</Text>
+      <Text fontSize={{ base: 'sm', md: 'md', lg: 'lg' }} color="gray.700">Sh. Ramnivas Bansal</Text>
+      <Text fontSize={{ base: 'sm', md: 'md', lg: 'lg' }} color="gray.700">Smt. Rama Devi</Text>
+    </Stack>
+  </Box>
+
+  {/* Bride Section */}
+  <Box>
+    <Stack spacing={1} textAlign="center" fontFamily="'Great Vibes', cursive">
+      <Text fontSize={{ base: 'sm', md: 'md', lg: 'lg' }} color="gray.600">Daughter of</Text>
+      <Text fontSize={{ base: 'sm', md: 'md', lg: 'lg' }} color="gray.700">Sh. Mithlesh Jaiswal</Text>
+      <Text fontSize={{ base: 'sm', md: 'md', lg: 'lg' }} color="gray.700">Smt. Seema Jaiswal</Text>
+    </Stack>
+  </Box>
+</Flex>
+
+
+          <Text fontSize={{ base: 'md', sm: 'lg', md: 'xl' }} color="gray.600" mt={6}>
             “Two hearts. Two souls. One beautiful journey. Let the celebration of love begin!”
           </Text>
         </Box>
