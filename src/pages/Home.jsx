@@ -26,7 +26,7 @@ const leftImages = allCollageImages.slice(0, midPoint);
 const rightImages = allCollageImages.slice(midPoint);
 
 export default function Home() {
-  const engagementDate = "2025-11-23T00:00:00";
+  const engagementDate = "2025-11-07T00:00:00";
 
   const calculateTimeLeft = () => {
     const difference = +new Date(engagementDate) - +new Date();
@@ -230,7 +230,7 @@ export default function Home() {
 
               {/* Use a more readable, emphasized text color */}
               <p className="fs-6 text-dark-emphasis lh-lg mb-3">
-                Mr. Ajeet Bansal & Mrs. Anita Bansal <br />
+                Mr. Ajeet Bansal & Mrs. Neha Bansal <br />
                 Cordially request the honour of your presence and blessings on
                 the auspicious occasion of the
               </p>
