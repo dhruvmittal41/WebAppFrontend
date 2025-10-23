@@ -1,198 +1,311 @@
-import { Box, Heading, Text, VStack, Image, Stack } from '@chakra-ui/react';
-import Countdown from '../components/Countdown';
+import React, { useState, useEffect } from "react";
+import "./index.css";
+
+// --- Your local images ---
+import bg1 from "./bg-image-1.jpg";
+import bg2 from "./bg-image-2.jpg";
+import bg3 from "./bg-image-3.jpg";
+import bg4 from "./bg-image-4.jpg";
+import bg5 from "./bg-image-5.jpg";
+import bg6 from "./bg-image-6.jpg";
+import bg7 from "./bg-image-7.jpg";
+// import bg8 from "./bg-image-8.jpg";
+// import bg9 from "./bg-image-9.jpg";
+// import bg10 from "./bg-image-10.jpg";
+// import bg11 from "./bg-image-11.jpg";
+// import bg12 from "./bg-image-12.jpg";
+import ganesha from "./ganesha.png";
+import couple from "./bride-groom-main.jpg";
+
+// --- Collage Images ---
+const allCollageImages = [bg1, bg2, bg3, bg4, bg5, bg6, bg7];
+
+// Split into left and right collage halves
+const midPoint = Math.ceil(allCollageImages.length / 2);
+const leftImages = allCollageImages.slice(0, midPoint);
+const rightImages = allCollageImages.slice(midPoint);
 
 export default function Home() {
-  const generateFireflies = (count = 30) => {
-    return Array.from({ length: count }).map((_, i) => {
-      const top = Math.random() * 100;
-      const left = Math.random() * 100;
-      const duration = 2 + Math.random() * 3;
-      const delay = Math.random() * 5;
+  const engagementDate = "2025-11-23T00:00:00";
 
-      return (
-        <Box
-          key={`firefly-${i}`}
-          position="absolute"
-          top={`${top}%`}
-          left={`${left}%`}
-          w="6px"
-          h="6px"
-          bg="yellow.300"
-          borderRadius="full"
-          filter="blur(1px)"
-          zIndex={1}
-          sx={{
-            animation: `twinkle ${duration}s ease-in-out ${delay}s infinite alternate`,
-            '@keyframes twinkle': {
-              '0%': { opacity: 0.3, transform: 'translateY(0px) scale(1)' },
-              '100%': { opacity: 1, transform: 'translateY(-10px) scale(1.5)' },
-            },
-          }}
-        />
-      );
-    });
+  const calculateTimeLeft = () => {
+    const difference = +new Date(engagementDate) - +new Date();
+    let timeLeft = {};
+
+    if (difference > 0) {
+      timeLeft = {
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((difference / 1000 / 60) % 60),
+        seconds: Math.floor((difference / 1000) % 60),
+      };
+    } else {
+      timeLeft = { days: 0, hours: 0, minutes: 0, seconds: 0 };
+    }
+    return timeLeft;
+  };
+
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // --- STYLES ---
+
+  const pageLayout = {
+    display: "grid",
+    gridTemplateColumns: "1fr auto 1fr", // Left, Center, Right
+    alignItems: "start",
+    minHeight: "100vh",
+    width: "100%",
+    backgroundColor: "#fdfaf6",
+    overflowX: "hidden",
+  };
+
+  const centerContent = {
+    display: "flex",
+    justifyContent: "center",
+    width: "100%",
+    padding: "3rem 1rem",
+    zIndex: 10,
+  };
+
+  const collageContainer = {
+    position: "sticky",
+    top: 0,
+    height: "100vh",
+    overflowY: "auto",
+    padding: "1rem",
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(120px, 2fr))",
+    gridAutoRows: "190px",
+    gap: "10px",
+    opacity: 0.65,
+  };
+
+  const collageImageBase = {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+    borderRadius: "12px",
+    boxShadow: "0 4px 10px rgba(0,0,0,0.08)",
+    transition: "transform 0.3s ease, box-shadow 0.3s ease",
+  };
+
+  const getCollageImageStyle = (index) => {
+    const style = { ...collageImageBase };
+    if (index % 5 === 1) {
+      style.gridRow = "span 2";
+    }
+    if (index % 7 === 3) {
+      style.gridColumn = "span 2";
+      style.gridRow = "span 1";
+    }
+    if (index % 6 === 4) {
+      style.gridRow = "span 2";
+      style.gridColumn = "span 2";
+    }
+    return style;
   };
 
   return (
-    <Box
-      minH="100vh"
-      bgGradient="linear(to-r, pink.50, yellow.50)"
-      py={{ base: 10, md: 16 }}
-      px={{ base: 4, md: 8 }}
-      position="relative"
-      overflow="hidden"
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      textAlign="center"
-      sx={{
-        border: '12px double #d4af37',
-        borderRadius: '24px',
-        boxShadow: '0 0 30px rgba(212, 175, 55, 0.5)',
-      }}
-    >
-      {/* Background Mandala */}
-      <Box
-        position="absolute"
-        top={0}
-        left={0}
-        right={0}
-        bottom={0}
-        bgImage="url('/mandala-bg.png')"
-        bgRepeat="no-repeat"
-        bgPosition="center"
-        bgSize="contain"
-        opacity={0.09}
-        zIndex={0}
-      />
+    <>
+      {/* --- Global Styles & Responsive Media Query --- */}
+      <style>
+        {`
+        .collage-img:hover {
+          transform: scale(1.03);
+          box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+          z-index: 5;
+        }
+        
+        .main-card-container {
+           width: 100%;
+           max-width: 720px;
+           min-width: 320px;
+        }
+        
+        @media (max-width: 992px) {
+          .page-layout {
+            display: block;
+          }
+          .collage-container {
+            position: relative;
+            height: auto;
+            max-height: 100vh;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-auto-rows: 100px;
+            opacity: 0.5;
+          }
+          .center-content {
+            padding: 1.5rem 0.5rem;
+          }
+        }
+      `}
+      </style>
 
-      {/* Floral Background - Responsive */}
-      <Box
-        position="absolute"
-        inset="0"
-        bgImage="url('/Bg-img.jpg')"
-        bgSize="cover"
-        bgRepeat="no-repeat"
-        bgPosition="center"
-        opacity={0.4}
-        zIndex={0}
-      />
+      {/* --- MAIN 3-COLUMN LAYOUT --- */}
+      <div style={pageLayout} className="page-layout">
+        {/* --- LEFT COLLAGE --- */}
+        <div style={collageContainer} className="collage-container">
+          {leftImages.map((img, index) => (
+            <img
+              key={`left-${index}`}
+              src={img}
+              alt={`Collage left ${index}`}
+              style={getCollageImageStyle(index)}
+              className="collage-img"
+            />
+          ))}
+        </div>
 
-      {/* Radial pastel overlay */}
-      <Box
-        position="absolute"
-        inset="0"
-        bg="radial-gradient(circle at center, rgba(255,240,245,0.5), transparent 70%)"
-        zIndex={0}
-      />
+        {/* --- MAIN CARD CONTENT --- */}
+        <div style={centerContent} className="center-content page-background">
+          <div className="col-11 col-md-10 col-lg-10 col-xl-8 main-card-container">
+            <div
+              // Add 'font-serif' class to set the base font
+              className="card shadow-lg border-0 text-center p-4 p-md-5 rounded-4 font-serif"
+              style={{
+                backgroundColor: "rgba(255, 255, 255, 0.95)",
+                backdropFilter: "blur(10px)",
+                borderColor: "rgba(0, 0, 0, 0.05)", // A softer border
+              }}
+            >
+              <img
+                src={ganesha}
+                alt="Lord Ganesha"
+                className="d-block mx-auto mb-2"
+                style={{ width: "70px", borderRadius: "8px" }}
+              />
+              <p className="text-muted mb-4">श्रीगणेशाय नमः</p>
 
-      {/* Fireflies */}
-      {generateFireflies(30)}
+              <img
+                src={couple}
+                alt="Shivam & Simran"
+                className="img-fluid rounded shadow-sm object-fit-cover"
+                style={{
+                  maxHeight: "350px",
+                  width: "100%",
+                  borderRadius: "12px",
+                }}
+              />
 
-      {/* Main Content */}
-      <VStack
-        spacing={{ base: 6, md: 8 }}
-        align="center"
-        zIndex={3}
-        width="100%"
-        maxW="900px"
-        px={{ base: 2, md: 4 }}
-      >
-        {/* Invitation Box */}
-        <Box
-          bg="whiteAlpha.800"
-          px={{ base: 4, md: 8 }}
-          py={6}
-          border="3px solid #E0B973"
-          borderRadius="2xl"
-          boxShadow="lg"
-          maxW="700px"
-          textAlign="center"
-          w="100%"
-        >
-          <Image
-            src="/ganesha.png"
-            alt="Lord Ganesha"
-            boxSize={{ base: '60px', md: '80px' }}
-            mx="auto"
-            mb={2}
-          />
-          <Text
-            fontSize={{ base: 'md', md: 'lg' }}
-            color="gray.600"
-            fontWeight="medium"
-            fontFamily="'Noto Sans Devanagari', serif"
-          >
-            श्रीगणेशाय नमः
-          </Text>
+              {/* Use script font for invitation line */}
+              <p className="fs-4 mt-4 text-secondary font-script">
+                You are cordially invited to the
+              </p>
 
-          {/* Kalash Icons */}
-          <Box display="flex" justifyContent="space-between" mt={2} px={4}>
-            <Image src="/kalash-left.png" alt="Kalash Left" boxSize="50px" />
-            <Image src="/kalash-right.png" alt="Kalash Right" boxSize="50px" />
-          </Box>
+              {/* Use script font and new color for main heading */}
+              <h1
+                className="fw-bold mt-2 font-script text-wedding-pink"
+                style={{ fontSize: "3rem" }}
+              >
+                Ring Ceremony of <br /> Shivam & Simran
+              </h1>
 
-          {/* Couple Name */}
-          <Heading
-            fontFamily="'Great Vibes', cursive"
-            fontSize={{ base: '3xl', md: '5xl', lg: '6xl' }}
-            color="pink.700"
-            mt={4}
-            sx={{
-              animation: 'shimmer 3s ease-in-out infinite',
-              '@keyframes shimmer': {
-                '0%': { opacity: 0.9 },
-                '50%': {
-                  opacity: 1,
-                  textShadow: '0 0 12px rgba(255, 190, 200, 0.6)',
-                },
-                '100%': { opacity: 0.9 },
-              },
-            }}
-          >
-            Shivam ❤️ Simran
-          </Heading>
+              {/* Countdown Timer with updated classes */}
+              <div className="d-flex justify-content-center flex-wrap gap-3 my-4">
+                {["Days", "Hours", "Minutes", "Seconds"].map((label, index) => (
+                  <div
+                    key={label}
+                    className="text-center mx-2"
+                    style={{ minWidth: "60px" }}
+                  >
+                    <h3 className="mb-0 countdown-number">
+                      {Object.values(timeLeft)[index]}
+                    </h3>
+                    <span className="text-muted small text-uppercase">
+                      {label}
+                    </span>
+                  </div>
+                ))}
+              </div>
 
-          {/* Family Info */}
-          <Stack
-            direction={{ base: 'column', md: 'row' }}
-            spacing={{ base: 8, md: 16 }}
-            mt={6}
-            justify="center"
-            align="flex-start"
-          >
-            {/* Groom */}
-            <Box textAlign="center" flex="1">
+              {/* Use the new decorative HR class */}
+              <hr className="decorative-hr my-4" />
 
-              <Stack spacing={1} fontFamily="'Great Vibes', cursive">
-                <Text fontSize={{ base: 'sm', md: 'md' }} color="gray.600">Son of</Text>
-                <Text fontSize={{ base: 'sm', md: 'md' }} color="gray.700">Sh. Ajeet Bansal</Text>
-                <Text fontSize={{ base: 'sm', md: 'md' }} color="gray.700">Smt. Neha Bansal</Text>
-                <Text fontSize={{ base: 'sm', md: 'md' }} color="gray.600" mt={2}>Grandson of</Text>
-                <Text fontSize={{ base: 'sm', md: 'md' }} color="gray.700">Sh. Ramnivas Bansal</Text>
-                <Text fontSize={{ base: 'sm', md: 'md' }} color="gray.700">Smt. Rama Devi</Text>
-              </Stack>
-            </Box>
+              {/* Use a more readable, emphasized text color */}
+              <p className="fs-6 text-dark-emphasis lh-lg mb-3">
+                Mr. Ajeet Bansal & Mrs. Anita Bansal <br />
+                Cordially request the honour of your presence and blessings on
+                the auspicious occasion of the
+              </p>
 
-            {/* Bride */}
-            <Box textAlign="center" flex="1">
-              <Stack spacing={1} fontFamily="'Great Vibes', cursive">
-                <Text fontSize={{ base: 'sm', md: 'md' }} color="gray.600">Daughter of</Text>
-                <Text fontSize={{ base: 'sm', md: 'md' }} color="gray.700">Sh. Mithlesh Jaiswal</Text>
-                <Text fontSize={{ base: 'sm', md: 'md' }} color="gray.700">Smt. Seema Jaiswal</Text>
-              </Stack>
-            </Box>
-          </Stack>
+              <h2 className="h3 mt-3 text-dark-emphasis fw-bold">
+                Ring Ceremony
+              </h2>
 
-          {/* Quote */}
-          <Text fontSize={{ base: 'md', sm: 'lg', md: 'xl' }} color="gray.600" mt={6}>
-            “Two hearts. Two souls. One beautiful journey. Let the celebration of love begin!”
-          </Text>
-        </Box>
+              <p className="fs-6 text-dark-emphasis mt-3 mb-1">of their son</p>
+              {/* Use script font and new color for names */}
+              <h2
+                className="h3 mb-1 text-wedding-pink font-script"
+                style={{ fontSize: "2.5rem" }}
+              >
+                Shivam
+              </h2>
+              <p className="fs-6 text-dark-emphasis my-2">with</p>
+              <h2
+                className="h3 text-wedding-pink font-script"
+                style={{ fontSize: "2.5rem" }}
+              >
+                Simran
+              </h2>
+              <p className="fs-6 text-dark-emphasis mt-2 lh-lg">
+                Daughter of Mr. Mithlesh Jaiswal & Mrs. Seema Jaiswal
+              </p>
 
-        {/* Countdown */}
-        <Countdown targetDate="2025-11-23T00:00:00" />
-      </VStack>
-    </Box>
+              {/* Date (kept gold for accent) */}
+              <h3
+                className="fw-bold mt-4"
+                style={{ color: "#B8860B", letterSpacing: "1px" }} // A slightly softer gold
+              >
+                23rd November 2025
+              </h3>
+
+              {/* Venue */}
+              <div className="mt-4">
+                <h4 className="h5 fw-semibold text-dark-emphasis">Venue</h4>
+                <p className="fs-6 text-secondary mt-2">
+                  The Grand Ballroom, Celebration Palace <br />
+                  123 Wedding Avenue, City, State - 123456
+                </p>
+
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=Celebration+Palace,+123+Wedding+Avenue" // Use a real query
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-outline-secondary btn-sm mt-2 px-3" // Softer button
+                >
+                  Open in Google Maps
+                </a>
+              </div>
+
+              {/* Use script font for the closing quote */}
+              <p className="text-muted fst-italic mt-5 font-script fs-5">
+                “Join us as we begin our forever surrounded by love and
+                blessings.”
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* --- RIGHT COLLAGE --- */}
+        <div style={collageContainer} className="collage-container">
+          {rightImages.map((img, index) => (
+            <img
+              key={`right-${index}`}
+              src={img}
+              alt={`Collage right ${index}`}
+              style={getCollageImageStyle(index)}
+              className="collage-img"
+            />
+          ))}
+        </div>
+      </div>
+    </>
   );
 }

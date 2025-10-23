@@ -1,35 +1,49 @@
-.fireflies-container {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
+/* 1. Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap');
+
+/* 2. Define our "stylish" script font class */
+.font-script {
+  font-family: 'Dancing Script', cursive;
 }
 
-.fireflies-container::before {
-  content: '';
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  background: rgba(255, 255, 153, 0.8);
-  border-radius: 50%;
-  animation: blink 2s infinite alternate;
-  box-shadow:
-    0 0 4px 2px rgba(255, 255, 153, 0.5),
-    100px 150px 4px 2px rgba(255, 255, 153, 0.6),
-    200px 300px 4px 2px rgba(255, 255, 153, 0.4),
-    300px 100px 4px 2px rgba(255, 255, 153, 0.7),
-    400px 250px 4px 2px rgba(255, 255, 153, 0.5),
-    500px 180px 4px 2px rgba(255, 255, 153, 0.6),
-    600px 400px 4px 2px rgba(255, 255, 153, 0.3);
+/* 3. Set the base font for the card text */
+.font-serif {
+  font-family: 'Merriweather', serif;
 }
 
-@keyframes blink {
-  0% {
-    opacity: 0.3;
-    transform: translateY(0px);
+/* 4. Define our new "wedding" color */
+.text-wedding-pink {
+  color: #c25b7a; /* A dusty, elegant rose color */
+}
+
+/* 5. Style the horizontal rule */
+.decorative-hr {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(194, 91, 122, 0.4), rgba(0, 0, 0, 0));
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* 6. Style the countdown numbers */
+.countdown-number {
+  font-size: 2.5rem; /* Make numbers a bit smaller on mobile */
+  font-weight: 700;
+  color: #c25b7a;
+}
+
+@media (min-width: 768px) {
+  .countdown-number {
+    font-size: 3.5rem; /* Larger numbers on desktop */
   }
-  100% {
-    opacity: 1;
-    transform: translateY(-10px);
-  }
+}
+
+/* 7. (Optional) Style for the page background to make the card stand out */
+/* Apply this style to the main wrapper, like your `center-content` div */
+.page-background {
+  min-height: 100vh;
+  padding: 2rem 0;
+  background-image: linear-gradient(135deg, #fdfafb 0%, #fefcf7 100%);
+  background-size: cover;
 }
