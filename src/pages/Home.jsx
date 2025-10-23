@@ -28,6 +28,22 @@ const rightImages = allCollageImages.slice(midPoint);
 export default function Home() {
   const engagementDate = "2025-11-07T00:00:00";
 
+  // --- RESPONSIVE STATE ---
+  // Check if the screen is mobile-sized (<= 992px)
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 992);
+
+  useEffect(() => {
+    // Update the isMobile state on window resize
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 992);
+    };
+
+    window.addEventListener("resize", handleResize);
+    // Cleanup the event listener on component unmount
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // --- COUNTDOWN LOGIC (Unchanged) ---
   const calculateTimeLeft = () => {
     const difference = +new Date(engagementDate) - +new Date();
     let timeLeft = {};
@@ -54,11 +70,13 @@ export default function Home() {
     return () => clearInterval(timer);
   }, []);
 
-  // --- STYLES ---
+  // --- DYNAMIC STYLES ---
 
   const pageLayout = {
-    display: "grid",
-    gridTemplateColumns: "1fr auto 1fr", // Left, Center, Right
+    // Use 'block' for mobile (stacks elements)
+    // Use 'grid' for desktop (3-column layout)
+    display: isMobile ? "block" : "grid",
+    gridTemplateColumns: "1fr auto 1fr", // Only applies to desktop
     alignItems: "start",
     minHeight: "100vh",
     width: "100%",
@@ -70,19 +88,27 @@ export default function Home() {
     display: "flex",
     justifyContent: "center",
     width: "100%",
-    padding: "3rem 1rem",
+    // Use smaller padding on mobile
+    padding: isMobile ? "1.5rem 0.5rem" : "3rem 1rem",
     zIndex: 10,
   };
 
   const collageContainer = {
-    position: "sticky",
+    // Use 'relative' on mobile, 'sticky' on desktop
+    position: isMobile ? "relative" : "sticky",
     top: 0,
-    height: "100vh",
+    // Use 'auto' height on mobile, '100vh' on desktop
+    height: isMobile ? "auto" : "100vh",
     overflowY: "auto",
     padding: "1rem",
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(120px, 2fr))",
-    gridAutoRows: "190px",
+    // Use a simple 2-column grid on mobile
+    // Use the auto-fit masonry grid on desktop
+    gridTemplateColumns: isMobile
+      ? "repeat(2, 1fr)"
+      : "repeat(auto-fit, minmax(120px, 2fr))",
+    // Use shorter rows on mobile
+    gridAutoRows: isMobile ? "120px" : "190px",
     gap: "10px",
     opacity: 0.65,
   };
@@ -98,6 +124,13 @@ export default function Home() {
 
   const getCollageImageStyle = (index) => {
     const style = { ...collageImageBase };
+
+    // If mobile, return the simple base style and skip masonry logic
+    if (isMobile) {
+      return style;
+    }
+
+    // Desktop-only masonry logic
     if (index % 5 === 1) {
       style.gridRow = "span 2";
     }
@@ -114,43 +147,29 @@ export default function Home() {
 
   return (
     <>
-      {/* --- Global Styles & Responsive Media Query --- */}
+      {/* --- Global Styles --- */}
+      {/* The responsive media query is no longer needed 
+          as all styles are handled dynamically by the 'isMobile' state */}
       <style>
         {`
-        .collage-img:hover {
-          transform: scale(1.03);
-          box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-          z-index: 5;
-        }
-        
-        .main-card-container {
-           width: 100%;
-           max-width: 720px;
-           min-width: 320px;
-        }
-        
-        @media (max-width: 992px) {
-          .page-layout {
-            display: block;
+          .collage-img:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+            z-index: 5;
           }
-          .collage-container {
-            position: relative;
-            height: auto;
-            max-height: 100vh;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            grid-auto-rows: 100px;
-            opacity: 0.5;
+          
+          .main-card-container {
+              width: 100%;
+              max-width: 720px;
+              min-width: 320px;
           }
-          .center-content {
-            padding: 1.5rem 0.5rem;
-          }
-        }
-      `}
+        `}
       </style>
 
-      {/* --- MAIN 3-COLUMN LAYOUT --- */}
+      {/* --- MAIN LAYOUT (Dynamic) --- */}
       <div style={pageLayout} className="page-layout">
         {/* --- LEFT COLLAGE --- */}
+        {/* This is always visible, stacks on top on mobile */}
         <div style={collageContainer} className="collage-container">
           {leftImages.map((img, index) => (
             <img
@@ -263,7 +282,7 @@ export default function Home() {
                 className="fw-bold mt-4"
                 style={{ color: "#B8860B", letterSpacing: "1px" }} // A slightly softer gold
               >
-                23rd November 2025
+                7th November 2025
               </h3>
 
               {/* Venue */}
@@ -294,17 +313,20 @@ export default function Home() {
         </div>
 
         {/* --- RIGHT COLLAGE --- */}
-        <div style={collageContainer} className="collage-container">
-          {rightImages.map((img, index) => (
-            <img
-              key={`right-${index}`}
-              src={img}
-              alt={`Collage right ${index}`}
-              style={getCollageImageStyle(index)}
-              className="collage-img"
-            />
-          ))}
-        </div>
+        {/* This is now conditional: ONLY renders if NOT mobile */}
+        {!isMobile && (
+          <div style={collageContainer} className="collage-container">
+            {rightImages.map((img, index) => (
+              <img
+                key={`right-${index}`}
+                src={img}
+                alt={`Collage right ${index}`}
+                style={getCollageImageStyle(index)}
+                className="collage-img"
+              />
+            ))}
+          </div>
+        )}
       </div>
     </>
   );
