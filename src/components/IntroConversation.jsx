@@ -1,19 +1,20 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
 // eslint-disable-next-line no-unused-vars
-import { motion, AnimatePresence } from 'framer-motion';
-import bride1 from '../assets/chibi-bride1.png';
-import groom1 from '../assets/chibi-groom1.png';
-import together from '../assets/chibi-bride-groom.png';
-import confetti from 'canvas-confetti';
-import './IntroConversation.css';
+import { motion, AnimatePresence } from "framer-motion";
+import bride1 from "../assets/chibi-bride1.png";
+import groom1 from "../assets/chibi-groom1.png";
+import together from "../assets/chibi-bride-groom.png";
+import confetti from "canvas-confetti";
+import "./IntroConversation.css";
+import React from "react";
 
 const dialogues = [
-  { char: 'bride', text: "Hey! You there!" },
-  { char: 'groom', text: "Yeah, you! The one scrolling." },
-  { char: 'bride', text: "Don't you know what's happening?" },
-  { char: 'groom', text: "It's the biggest event of our lives!" },
-  { char: 'bride', text: "Our wedding!! 🎉" },
-  { char: 'groom', text: "Ready to join the celebration?" },
+  { char: "bride", text: "Hey! You there!" },
+  { char: "groom", text: "Yeah, you! The one scrolling." },
+  { char: "bride", text: "Don't you know what's happening?" },
+  { char: "groom", text: "It's the biggest event of our lives!" },
+  { char: "bride", text: "Our wedding!! 🎉" },
+  { char: "groom", text: "Ready to join the celebration?" },
 ];
 
 export default function IntroConversation({ onFinish }) {
@@ -49,13 +50,12 @@ export default function IntroConversation({ onFinish }) {
     try {
       setHasStarted(true);
     } catch (err) {
-      console.warn('Bell chime error:', err);
+      console.warn("Bell chime error:", err);
     }
   };
 
   const triggerConfettiAndFinish = () => {
     confetti({ particleCount: 150, spread: 90, origin: { y: 0.6 } });
-
 
     setTimeout(() => {
       bgMusic.current.pause();
@@ -67,7 +67,10 @@ export default function IntroConversation({ onFinish }) {
     <>
       {!hasStarted ? (
         <div className="start-experience">
-          <button className="continue-btn" onClick={() => setHasStarted(true)&& handleStart}>
+          <button
+            className="continue-btn"
+            onClick={() => setHasStarted(true) && handleStart}
+          >
             Start Experience 🎶
           </button>
         </div>
@@ -76,23 +79,35 @@ export default function IntroConversation({ onFinish }) {
           <audio ref={bgMusic} src="/sounds/bg-music.mp3" preload="auto" />
 
           {/* Background elements */}
-         <div className="background-overlay">
-          <img src="/assets/mandala.png" alt="Ganesha" className="ganesha-svg ganesha" />
-          <div className="mandala mandala1"></div>
-          <div className="mandala mandala2"></div>
-          <div className="mandala mandala3"></div>
-          <div className="mandala mandala4"></div>
-        </div>
+          <div className="background-overlay">
+            <img
+              src="/assets/mandala.png"
+              alt="Ganesha"
+              className="ganesha-svg ganesha"
+            />
+            <div className="mandala mandala1"></div>
+            <div className="mandala mandala2"></div>
+            <div className="mandala mandala3"></div>
+            <div className="mandala mandala4"></div>
+          </div>
 
           {/* Characters */}
           {!isLast ? (
             <>
-              <div className="character left"><img src={bride1} alt="bride" /></div>
-              <div className="character right"><img src={groom1} alt="groom" /></div>
+              <div className="character left">
+                <img src={bride1} alt="bride" />
+              </div>
+              <div className="character right">
+                <img src={groom1} alt="groom" />
+              </div>
             </>
           ) : (
             <div className="centered-image-wrapper">
-              <img src={together} alt="bride and groom together" className="centered-image" />
+              <img
+                src={together}
+                alt="bride and groom together"
+                className="centered-image"
+              />
             </div>
           )}
 
@@ -105,7 +120,11 @@ export default function IntroConversation({ onFinish }) {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 1.9 }}
               className={`speech-bubble ${
-                isLast ? 'center-bubble' : dialogues[current].char === 'bride' ? 'left-bubble' : 'right-bubble'
+                isLast
+                  ? "center-bubble"
+                  : dialogues[current].char === "bride"
+                  ? "left-bubble"
+                  : "right-bubble"
               }`}
             >
               {dialogues[current].text}
